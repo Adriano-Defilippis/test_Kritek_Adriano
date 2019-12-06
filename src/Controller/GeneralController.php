@@ -129,41 +129,23 @@ class GeneralController extends AbstractController
 
      }
 
-    /**
-     * @Route("/invoice/register", name="saveInvoice")
-     */
+     /**
+      * @Route("/delete/{id}", name="delete")
+      * Method ({"GET", "POST"})
+      */
 
-     public function save(){
+      public function delete($id){
 
-       $amount = 400;
-       $quantity =4;
-       $iva = $amount * 22 / 100;
+        $invoice = $this->getDoctrine()->getRepository(Invoice::class)->find($id);
+        $details = $invoice->getRowsInvoice();
 
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($invoice);
+        $entityManager->remove($details);
+        $entityManager->flush();
 
-       $entityManager = $this->getDoctrine()->getManager();
+        return $this->redirectToRoute('index');
+      }
 
-       $invoice = new Invoice();
-
-       $invoice->setDate(new \DateTime());
-       $invoice->setNumber(1234);
-       $invoice->setCustomerId(22);
-
-       $rows_invoice = new RowsInvoice;
-
-       $rows_invoice->setInvoiceId($invoice);
-       $rows_invoice->setDescription('dkdkdkd kdkdkkd dkdkdk dkdkdk');
-       $rows_invoice->setQuantity($quantity);
-       $rows_invoice->setAmount($amount);
-       $rows_invoice->setIvaAmount($iva);
-       $rows_invoice->setTotalAmount($amount + $iva);
-
-       $entityManager->persist($invoice);
-       $entityManager->persist($rows_invoice);
-
-
-       $entityManager->flush();
-
-       return new Response('saved an Invoice with the id of ' . $invoice->getId() . ' and import ' . $rows_invoice->getTotalAmount());
-     }
 
 }
