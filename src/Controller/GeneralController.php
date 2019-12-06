@@ -86,13 +86,13 @@ class GeneralController extends AbstractController
            'attr' => array('class' => 'btn btn-outline-primary form-control')
          ))
           ->getForm();
-
+//
           $form->handleRequest($request);
 
           if ($form->isSubmitted() && $form->isValid()) {
 
             $validatedData = $form->getData();
-            
+
             $amount = $validatedData['amount'] * $validatedData['quantity'];
 
             $iva = $amount *  $validatedData['iva'] / 100;
