@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GeneralController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+</div>
+
+<div class="container">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Customer_id</th>
+        <th scope="col">Date</th>
+        <th scope="col">Number</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invoice in invoices %}
+      <tr>
+        <th scope="row">{{ invoice.id }}</th>
+        <th scope="row">{{ invoice.getCustomerId }}</th>
+        <td>{{ invoice.date|date("m/d/Y") }}</td>
+        <td>{{ invoice.number }}</td>
+        <td scope="col">
+          <a href="/invoice/new" type="button" class="btn btn-primary">New</a>
+          <a href="show/{{ invoice.id }}" type="button" class="btn btn-dark">Show</a>
+          <a href="" type="button" class="btn btn-danger">Delete</a>
+        </td>
+
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

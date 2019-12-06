@@ -17,7 +17,8 @@ class RowsInvoice
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="App\Entity\Invoice", inversedBy="rowsInvoice", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $invoice_id;
 
@@ -32,7 +33,7 @@ class RowsInvoice
     private $quantity;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=12, scale=2)
      */
     private $amount;
 
@@ -51,12 +52,12 @@ class RowsInvoice
         return $this->id;
     }
 
-    public function getInvoiceId(): ?int
+    public function getInvoiceId(): ?Invoice
     {
         return $this->invoice_id;
     }
 
-    public function setInvoiceId(int $invoice_id): self
+    public function setInvoiceId(Invoice $invoice_id): self
     {
         $this->invoice_id = $invoice_id;
 
@@ -121,5 +122,9 @@ class RowsInvoice
         $this->total_amount = $total_amount;
 
         return $this;
+    }
+
+    public function __toString() {
+      return $this->getInvoiceId();
     }
 }

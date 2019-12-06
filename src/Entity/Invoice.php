@@ -22,7 +22,7 @@ class Invoice
     private $date;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $number;
 
@@ -30,6 +30,13 @@ class Invoice
      * @ORM\Column(type="integer")
      */
     private $customer_id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\RowsInvoice", mappedBy="invoice_id", cascade={"persist", "remove"})
+     */
+    private $rowsInvoice;
+
+
 
     public function getId(): ?int
     {
@@ -70,5 +77,26 @@ class Invoice
         $this->customer_id = $customer_id;
 
         return $this;
+    }
+
+    public function getRowsInvoice(): ?RowsInvoice
+    {
+        return $this->rowsInvoice;
+    }
+
+    public function setRowsInvoice(RowsInvoice $rowsInvoice): self
+    {
+        $this->rowsInvoice = $rowsInvoice;
+
+        // set the owning side of the relation if necessary
+        if ($rowsInvoice->getInvoiceId() !== $this) {
+            $rowsInvoice->setInvoiceId($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString() {
+      return $this->getDate();
     }
 }

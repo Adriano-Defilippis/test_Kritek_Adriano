@@ -1,0 +1,43 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Details invoice{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Invoice_id</th>
+        <th scope="col">Description</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Iva Amount</th>
+        <th scope="col">Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+
+        <th scope="row">{{ invoice.id }}</th>
+        <td>{{ details.description }}</td>
+        <td>{{ details.quantity }}</td>
+        <td>{{ details.getAmount }}</td>
+        <td>{{ details.getIvaAmount }}</td>
+        <td>{{ details.getTotalAmount }}</td>
+        <td scope="col"> <a href="/" type="button" class="btn btn-dark">Back</a> </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}
