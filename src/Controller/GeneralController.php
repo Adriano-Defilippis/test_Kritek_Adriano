@@ -78,6 +78,9 @@ class GeneralController extends AbstractController
          ->add('amount', NumberType::class, array(
            'required' => true,
            'attr'=> array('class'=> 'form-control')))
+         ->add('iva', NumberType::class, array(
+           'required' => true,
+           'attr'=> array('class'=> 'form-control')))
          ->add('save', SubmitType::class, array(
            'label'=> 'Create',
            'attr' => array('class' => 'btn btn-outline-primary form-control')
@@ -89,8 +92,10 @@ class GeneralController extends AbstractController
           if ($form->isSubmitted() && $form->isValid()) {
 
             $validatedData = $form->getData();
+            
             $amount = $validatedData['amount'] * $validatedData['quantity'];
-            $iva = $amount * 22 / 100;
+
+            $iva = $amount *  $validatedData['iva'] / 100;
 
             $entityManager = $this->getDoctrine()->getManager();
 
